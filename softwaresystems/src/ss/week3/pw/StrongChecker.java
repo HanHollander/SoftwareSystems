@@ -2,9 +2,9 @@ package ss.week3.pw;
 
 public class StrongChecker extends BasicChecker{
 	
-	private static final String INITPASS = "password123";
+	public static final String INITPASS = "password123";
 	
-	public boolean strongAcceptable(String suggestion) {
+	public boolean acceptable(String suggestion) {
 		return super.acceptable(suggestion) && firstCharIsLetter(suggestion) && lastCharIsNumber(suggestion);
 	}
 	

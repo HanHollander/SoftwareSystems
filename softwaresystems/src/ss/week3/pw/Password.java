@@ -2,15 +2,15 @@ package ss.week3.pw;
 
 public class Password {
 	
-	public static final String INITIAL = "password";
+	//public static final String INITIAL = "password";
 	
 	private String password;
 	private Checker checker;
-	private String factoryPassword;
+	//private String factoryPassword;
 	
 	public Password(Checker checker) {
 		this.checker = checker;
-		factoryPassword = checker.generatePassword();
+		password = checker.generatePassword();
 	}
 	
 	public Password() {
@@ -23,7 +23,7 @@ public class Password {
 	
 	public boolean setWord(String oldPass, String newPass) {
 		boolean result = false;
-		if (testWord(oldPass) && acceptable(newPass)) {
+		if (testWord(oldPass) && checker.acceptable(newPass)) {
 			password = newPass;
 			result = true;
 		}
@@ -38,8 +38,8 @@ public class Password {
 		return checker;
 	}
 	
-	public String getFactoryPassword() {
-		return factoryPassword;
-	}
+	//public String getFactoryPassword() {
+		//return factoryPassword;
+	//}
 
 }
