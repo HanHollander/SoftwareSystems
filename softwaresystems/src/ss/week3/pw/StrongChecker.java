@@ -2,6 +2,8 @@ package ss.week3.pw;
 
 public class StrongChecker extends BasicChecker{
 	
+	private static String INITPASS = "password123";
+	
 	public boolean strongAcceptable(String suggestion) {
 		return super.acceptable(suggestion) && firstCharIsLetter(suggestion) && lastCharIsNumber(suggestion);
 	}
@@ -14,5 +16,9 @@ public class StrongChecker extends BasicChecker{
 	public boolean lastCharIsNumber(String suggestion) {
 		int c = (int)suggestion.charAt(suggestion.length() - 1);
 		return (c >= 48 && c <= 57);
+	}
+	
+	public String generatePassword() {
+		return INITPASS;
 	}
 }
