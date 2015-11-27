@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import java.io.PrintStream;
 
 import ss.week3.hotel.*;
 
@@ -14,13 +15,21 @@ public class BillTest {
 	
 	@Before
 	public void setUp() {
-		bill = new Bill(new java.io.PrintStream(System.out));
+		bill = new Bill(null);
 		soap = new TestItem("soap", 2000.95);
 	}
 
 	@Test
+	public void testInitialState() {
+		assertEquals(0.0, bill.getSum(), 0.001);
+	}
+	
+	@Test
 	public void testNewItem() {
-		assertEquals(0, bill.getSum());
+		bill.newItem(soap);
+		assertEquals(2000.95, bill.getSum(), 0.001);
+		bill.newItem(soap);
+		assertEquals(4001.90, bill.getSum(), 0.001);
 	}
 
 }

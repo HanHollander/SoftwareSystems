@@ -22,6 +22,10 @@ public class Room {
     	number = no;
     	safe = new Safe();
     }
+    public Room(int no, PricedSafe safe) {
+    	number = no;
+    	this.safe = safe;
+    }
 
     // ------------------ Queries --------------------------
 
