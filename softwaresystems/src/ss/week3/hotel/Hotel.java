@@ -93,4 +93,25 @@ public class Hotel {
 		String result = result1 + result2;
 		return result;
 	}
-}
+	
+	
+	
+	public Bill getBill(String name, int nights) {
+		Bill result = null;
+		Guest guest = getRoom(name).getGuest();
+		if (guest != null) {
+			Room room = guest.getRoom();
+			if (room instanceof PricedRoom) {
+				result = new Bill(System.out);
+				for (int i = 0; i < nights; i++) {
+					//result.newItem(room);
+				}
+			}
+			Safe safe = room.getSafe();
+			if (safe instanceof PricedSafe) {
+				//result.newItem(PricedSafe);
+			}
+		}
+		return result;
+	}	
+}	

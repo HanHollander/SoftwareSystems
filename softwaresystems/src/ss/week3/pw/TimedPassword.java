@@ -5,7 +5,6 @@ public class TimedPassword extends Password {
 	private long validTime;
 	private static final long INITVALIDTIME = 100000;
 	private long initTime;
-	private String password;
 	
 	public TimedPassword(long validTime) {
 		this.validTime = validTime;
@@ -23,8 +22,7 @@ public class TimedPassword extends Password {
 	
 	public boolean setWord(String oldPass, String newPass) {
 		boolean result = false;
-		if (testWord(oldPass) && getChecker().acceptable(newPass)) {
-			password = newPass;
+		if (super.setWord(oldPass, newPass)) {
 			result = true;
 			initTime = java.lang.System.currentTimeMillis();
 		}
