@@ -1,5 +1,5 @@
 package ss.week3.hotel;
-//comment
+//comment2
 public class Hotel {
 	
 	private /*@ spec_public*/ Password pass;
