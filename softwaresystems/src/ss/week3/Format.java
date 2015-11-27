@@ -7,7 +7,8 @@ public class Format {
 	}
 	
 	public static void main(String[] args) {
-		printLine("Weidse", -30.00);
+		System.out.print(printLine("Weidse", -30.00));
+		System.out.print(printLine("Weidse", -30.00));
 		printLine("Solo", 999.00);
 	}
 
