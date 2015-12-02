@@ -1,4 +1,4 @@
-package ss.week4.function;
+package ss.week4.math;
 
 public class LinearProduct extends Product {
 	
