@@ -8,7 +8,7 @@ public class Constant implements Function {
 		this.constant = c;
 	}
 	
-	public double apply() {
+	public double apply(double x) {
 		return constant;
 	}
 

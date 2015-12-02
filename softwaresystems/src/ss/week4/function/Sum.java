@@ -10,8 +10,8 @@ public class Sum implements Function {
 		this.f2 = f2;
 	}
 	
-	public double apply() {
-		return f1.apply() + f2.apply();
+	public double apply(double x) {
+		return f1.apply(x) + f2.apply(x);
 	}
 
 	public Function derivative() {
@@ -19,7 +19,7 @@ public class Sum implements Function {
 	}
 	
 	public String toString() {
-		return "" + f1.toString() + f2.toString();
+		return f1.toString() + " + " + f2.toString();
 	}
 
 }

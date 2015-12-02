@@ -9,14 +9,17 @@ public class Product implements Function {
 		this.f1 = f1;
 		this.f2 = f2;
 	}
-	public double apply() {
-		return f1.apply() * f2.apply();
+	
+	public double apply(double x) {
+		return f1.apply(x) * f2.apply(x);
 	}
 
-	public Function derivative() {
-		// TODO Auto-generated method stub
-		return null;
+	public Function derivative() { 
+		return new Sum(new Product(f1.derivative(), f2), new Product(f1, f2.derivative()));
 	}
 	
-
+	public String toString() {
+		return f1.toString() + " * " + f2.toString();
+	}
+	
 }
