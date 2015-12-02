@@ -17,7 +17,7 @@ public class Constant implements Function {
 	}
 	
 	public String toString() {
-		return "f(x) = " + constant;
+		return "" + constant;
 	}
 
 }
