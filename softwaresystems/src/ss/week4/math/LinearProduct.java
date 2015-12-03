@@ -24,7 +24,7 @@ public class LinearProduct extends Product implements Integrandable {
 	}
 	
 	public String toString() {
-		return f1.toString() + f2.toString();
+		return f1.toString() + " * " + f2.toString();
 	}
 
 }

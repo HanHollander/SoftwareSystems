@@ -51,7 +51,7 @@ public class Polynomial implements Function, Integrandable {
 		for (int i = 0; i < linearProducts.length; i++) {
 			result = result + " + " + linearProducts[i].toString();
 		}
-		result.replaceFirst(" + ", "");
+		result.replace(" + ", "");
 		return result;
 	}
 
