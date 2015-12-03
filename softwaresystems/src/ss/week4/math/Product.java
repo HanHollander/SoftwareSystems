@@ -22,4 +22,8 @@ public class Product implements Function {
 		return f1.toString() + " * " + f2.toString();
 	}
 	
+	public Function integrand() {
+		return null;
+	}
+	
 }
