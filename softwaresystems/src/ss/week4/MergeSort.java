@@ -6,7 +6,7 @@ import java.util.LinkedList;
 public class MergeSort {
 	
 	public static void main(String[] args) {
-		List<Integer> testList = new ArrayList<>(Arrays.asList(3,6,5,4));
+		List<Integer> testList = new ArrayList<>(Arrays.asList(3,6,5,4,45,74,346,734,2346,734,4,64,236,47,2364,84));
 		List<Integer> result = mergesort(testList);
 		System.out.println(testList);
 		System.out.println("RESULT" + result);
