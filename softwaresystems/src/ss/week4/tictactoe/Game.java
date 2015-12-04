@@ -118,7 +118,7 @@ public class Game {
      * the changed game situation is printed.
      */
     private void play() {
-        // TODO: implement, see P-4.20
+        update();
     }
 
     /**

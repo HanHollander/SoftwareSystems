@@ -29,7 +29,7 @@ public class Safe {
 	//@ ensures \result ==> isActive();
 	//@ ensures (pass.testWord(password) && \old(!isActive())) ==> isActive();
 	public boolean activate(String password) {
-		assert password != null;
+		//assert password != null;
 		boolean result = false;
 		if(pass.testWord(password) && activation == Activation.INACTIVE) {
 			activation = Activation.ACTIVE;
