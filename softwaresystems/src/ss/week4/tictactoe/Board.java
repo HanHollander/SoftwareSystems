@@ -25,11 +25,11 @@ public class Board {
     // -- Constructors -----------------------------------------------
 
     /**
-     * Creates an empty student.
+     * Creates an empty board.
      */
     //@ ensures (\forall int i; 0 <= i & i < DIM * DIM; this.getField(i) == Mark.EMPTY);
     public Board() {
-    	// TODO: implement, see exercise P-4.18
+    	
     }
 
     /**
