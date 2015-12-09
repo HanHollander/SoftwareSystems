@@ -19,27 +19,17 @@ public class MergeSort {
     		return result;
     	} else {
     		int index = list.size()/2;
-    		System.out.println(index);
     		List<Elem> firstList = list.subList(0, index);
-    		System.out.println("Firstlist" + firstList);
     		List<Elem> first = mergesort(firstList);
-    		System.out.println("First" + first);
     		List<Elem> secondList = list.subList(index, list.size());
-    		System.out.println("Secondlist" + secondList);
     		List<Elem> second = mergesort(secondList);
-    		System.out.println("Second" + second);
-    		
-    		//result = Collections.emptyList();
     		
     		int fi = 0;
     		int si = 0;
-    		//System.out.println(first.size());
     		while (fi < first.size() && si < second.size()) {
-    			//System.out.println("im here");
     			if (first.get(fi).compareTo(second.get(si)) < 0) {
     				result.add(first.get(fi));
     				fi++;
-    				//System.out.println("added " + result);
     			} else {
     				result.add(second.get(si));
     				si++;
@@ -50,9 +40,6 @@ public class MergeSort {
     		} else if(si < second.size()) {
     			result.addAll(second.subList(si, second.size()));
     		}
-    		System.out.println("semiresult" + result);
-    		list = result;
-    		System.out.println(list);
     		return result;
     	}
     }

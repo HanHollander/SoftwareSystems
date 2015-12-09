@@ -39,11 +39,13 @@ public class MergeSortTest {
     @Test
     public void testMergesortUnsortedList() {
         List<Integer> sequence = new ArrayList<>(Arrays.asList(3, 2, 1, 5, 4));
-        MergeSort.mergesort(sequence);
+        //aanpassing
+        sequence = MergeSort.mergesort(sequence);
         assertEquals(sequence, Arrays.asList(1, 2, 3, 4, 5));
 
         sequence = new ArrayList<>(Arrays.asList(3, 2, 1, 6, 5, 4));
-        MergeSort.mergesort(sequence);
+        //aanpassing
+        sequence = MergeSort.mergesort(sequence);
         assertEquals(sequence, Arrays.asList(1, 2, 3, 4, 5, 6));
     }
 }

@@ -71,8 +71,8 @@ public class Game {
     public void start() {
         boolean doorgaan = true;
         while (doorgaan) {
-            reset();
-            play();
+            this.reset();
+            this.play();
             doorgaan = readBoolean("\n> Play another time? (y/n)?", "y", "n");
         }
     }
@@ -95,7 +95,7 @@ public class Game {
         String answer;
         do {
             System.out.print(prompt);
-            try (Scanner in = new Scanner(System.in)) {
+            Scanner in = new Scanner(System.in); {
                 answer = in.hasNextLine() ? in.nextLine() : null;
             }
         } while (answer == null || (!answer.equals(yes) && !answer.equals(no)));
@@ -118,7 +118,13 @@ public class Game {
      * the changed game situation is printed.
      */
     private void play() {
-        update();
+    	update();
+        while (!board.gameOver()) {
+        	players[current].makeMove(board);
+        	update();
+        	current = (current + 1) % NUMBER_PLAYERS;
+        }
+        printResult();
     }
 
     /**
