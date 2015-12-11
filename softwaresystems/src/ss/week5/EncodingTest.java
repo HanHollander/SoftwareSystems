@@ -31,13 +31,13 @@ public class EncodingTest {
         System.out.println(Base64.encodeBase64String(bytearray2));
         
         String base64String = "U29mdHdhcmUgU3lzdGVtcw==";
-        System.out.println(Base64.decodeBase64(base64String));
+        System.out.println(Base64.encodeBase64String(base64String.getBytes()));
         
         String as = "";
         String a = "a";
         for (int i = 0; i < 16; i++){
         	as = as + a;
-        	System.out.println(as + " -> " + Base64.decodeBase64(base64String));
+        	System.out.println(as + " -> " + Base64.encodeBase64String(as.getBytes()));
         }
     }
 }
