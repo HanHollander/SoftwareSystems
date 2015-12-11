@@ -19,5 +19,13 @@ public class ComputerPlayer extends Player {
 	public int determineMove(Board board) {
 		return strategy.determineMove(board, mark);
 	}
+	
+	public void setStrategy(Strategy strategy) {
+		this.strategy = strategy;
+	}
+	
+	public Strategy getStrategy() {
+		return strategy;
+	}
 
 }

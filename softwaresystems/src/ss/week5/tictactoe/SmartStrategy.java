@@ -12,6 +12,8 @@ public class SmartStrategy implements Strategy {
 	//@ensures emptyFields.contains(\result);
 	//@ensures \result >= 0 && \result <= 8;
 	//@ensures isEmptyField(\result) == true;
+	//@ensures isEmptyField(4) -> \result == 4;
+	//@ensures makeMove
 	public int determineMove(Board b, Mark m) {
 		int result = -1;
 		boolean determined = false;
@@ -20,6 +22,7 @@ public class SmartStrategy implements Strategy {
 			if (b.isEmptyField(i)) {
 				emptyFields.add(i);
 			}
+		} 
 		if (b.isEmptyField(4)) {
 			result = 4;
 			determined = true;
@@ -51,9 +54,9 @@ public class SmartStrategy implements Strategy {
 			}
 		} 
 		if (!determined){
-			for (int i = 0; i < Board.DIM * Board.DIM; i++) {
-				if (b.isEmptyField(i)) {
-					emptyFields.add(i);
+			for (int j = 0; j < Board.DIM * Board.DIM; j++) {
+				if (b.isEmptyField(j)) {
+					emptyFields.add(j);
 				}
 			}
 			while (!emptyFields.contains(result)) {
