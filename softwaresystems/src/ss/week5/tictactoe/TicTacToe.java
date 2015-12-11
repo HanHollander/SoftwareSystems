@@ -9,9 +9,29 @@ package ss.week5.tictactoe;
  */
 public class TicTacToe {
     public static void main(String[] args) {
-    	Player p1 = new HumanPlayer(args[0], Mark.OO); // "Wijtse", Mark.OO);
-    	Player p2 = new HumanPlayer(args[1], Mark.XX); // "Han", Mark.XX);
-        Game game = new Game(p1, p2);
-        game.start();
+    	if (args.length > 1){
+    		Player p1;
+    		Player p2;
+    		String n1 = args[0];
+    		String n2 = args[1];
+    		String naive = "-N";
+    		String smart = "-S";
+    		if (n1.equals(naive)) {
+    			p1 = new ComputerPlayer(Mark.OO);
+    		} else if (n1.equals(smart)) {
+    			p1 = new ComputerPlayer(Mark.OO, new SmartStrategy());
+    		} else {
+    			p1 = new HumanPlayer(n1, Mark.OO); // "Wijtse", Mark.OO);
+    		}
+    		if (n2.equals(naive)) {
+    			p2 = new ComputerPlayer(Mark.XX);
+    		} else if (n2.equals(smart)) {
+    			p2 = new ComputerPlayer(Mark.XX, new SmartStrategy());
+    		} else {
+    			p2 = new HumanPlayer(n2, Mark.XX); // "Wijtse", Mark.OO);
+    		}
+            Game game = new Game(p1, p2);
+            game.start();
+    	}
     }
 }
