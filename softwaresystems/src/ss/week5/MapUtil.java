@@ -8,9 +8,8 @@ import java.util.Set;
 
 public class MapUtil {
 	
-	//@ensures (\forall K key; (\forall K compareKey; V map.get(key) != V map.get(compareKey)));
-	
-	//Map<K, V> map.get(key) != map.get(!key))
+	//@requires map != null
+	//@ensures \result == \forall K key, key2; map.keySet().containsKey(key) && map.keySet().contains(key); map.get(key) != map.get(key2) || key == key2;
     public static <K, V> boolean isOneOnOne(Map<K, V> map) {
         Set<K> keySet = map.keySet();
         boolean result = true;
@@ -28,6 +27,8 @@ public class MapUtil {
         return result;
     }
     
+    //@requires map != null && range != null
+    //@ensures \result == \forall V value; range.contains(value); map.containsValue(value);
     public static <K, V> boolean isSurjectiveOnRange(Map<K, V> map, Set<V> range) {
     	Set<K> keySet = map.keySet();
     	boolean result = true;
@@ -47,6 +48,9 @@ public class MapUtil {
         return result;
     }
     
+    //@requires map != null
+    //@ensures \forall K key; map.containsKey(key); \result.containsValue(Set.contains(key));
+    //@ensures \forall V value; map.containsValue(value); \result.containsKey(value);
     public static <K, V> Map<V, Set<K>> inverse(Map<K, V> map) {
         Map<V, Set<K>> result = new HashMap<V, Set<K>>();
         Set<K> keySet = map.keySet();
@@ -63,6 +67,9 @@ public class MapUtil {
         return result;
 	}
     
+    //@requires map != null
+    //@ensures \forall K key; map.containsKey(key); \result.containsValue(key);
+    //@ensures \forall V value; map.containsValue(value); \result.containsKey(value);
 	public static <K, V> Map<V, K> inverseBijection(Map<K, V> map) {
         Map<V, K> result = new HashMap<V, K>();
         Set<K> keySet = map.keySet();
@@ -73,6 +80,8 @@ public class MapUtil {
         return result;
 	}
 	
+	//@requires g != null && f != null
+	//@ensures \result == \forall V value; f.containsValue(value); g.containsKey(value);
 	public static <K, V, W> boolean compatible(Map<K, V> f, Map<V, W> g) {
         boolean result = true;
 		Set<K> keySetF = f.keySet();
@@ -98,10 +107,12 @@ public class MapUtil {
         return result;
 	}
 	
+	//@requires g != null && f != null
+	//@requires \forall V value; f.containsValue(value); g.containsKey(value);
+	//@ensures \forall K key; \result.containsKey(key); f.containsKey(key) && g.containsKey(f.get(key)) && \result.containsValue(g.get(f.get(key)));
 	public static <K, V, W> Map<K, W> compose(Map<K, V> f, Map<V, W> g) {
         Map<K, W> result = new HashMap<K, W>();
         Set<K> keySetF = f.keySet();
-        Set<V> keySetG = g.keySet();
 		for (K keyF : keySetF) {
 			W value = g.get(f.get(keyF));
 			result.put(keyF, value);

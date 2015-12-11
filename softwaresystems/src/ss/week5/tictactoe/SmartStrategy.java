@@ -9,11 +9,12 @@ public class SmartStrategy implements Strategy {
 		return "Smart strategy";
 	}
 
+	//@requires b != null;
+	//@requires m != null;
 	//@ensures emptyFields.contains(\result);
 	//@ensures \result >= 0 && \result <= 8;
 	//@ensures isEmptyField(\result) == true;
-	//@ensures isEmptyField(4) -> \result == 4;
-	//@ensures makeMove
+	//@ensures isEmptyField(4) ==> \result == 4;
 	public int determineMove(Board b, Mark m) {
 		int result = -1;
 		boolean determined = false;
