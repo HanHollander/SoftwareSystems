@@ -83,11 +83,4 @@ public class HumanPlayer extends Player {
         } while (!intRead);
         return value;
     }
-
-	@Override
-	public int determineMove(Board board) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }
