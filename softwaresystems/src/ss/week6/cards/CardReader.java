@@ -25,14 +25,14 @@ public class CardReader {
 	private static ObjectInputStream objectIn;
 	private static ObjectOutputStream objectOut;
 
-	private static Card read() throws EOFException {
+	private static Card read() throws IOException {//EOFException {
 		if (reader != null) {
 			return Card.read(reader);
 		} else if (dataIn != null) {
 			return Card.read(dataIn);
-		} else {
-			return Card.read(objectIn);
-		}
+		} else {return null;} //else {
+//			return Card.read(objectIn);
+//		}
 	}
 
 	private static void write(Card k) throws IOException {
@@ -40,9 +40,9 @@ public class CardReader {
 			k.write(writer);
 		} else if (dataOut != null) {
 			k.write(dataOut);
-		} else {
-			k.write(objectOut);
-		}
+		} else {}
+//			k.write(objectOut);
+//		}
 	}
 
 	private static void close() {

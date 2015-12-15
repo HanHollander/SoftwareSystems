@@ -1,7 +1,16 @@
 package ss.week6.cards;
 
+import java.io.BufferedReader;
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.EOFException;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Card
 {
@@ -37,11 +46,61 @@ public class Card
 	 * @param printWriter the PrintWriter the description is sent to
 	 */
 	public void write(PrintWriter printWriter) {
-		
 		String descr = this.toString();
 		printWriter.println(descr);
-		
 	}
+	
+	/**
+	 * Read a file and make cards
+	 * @param reader
+	 * @return Card
+	 * @throws IOException
+	 */
+	public static Card read(BufferedReader reader) throws IOException {
+		try {
+			String line = reader.readLine();
+			Scanner scanner = new Scanner(line);
+			List cardInfo = new ArrayList<String>();
+			Card newCard = null;
+			while (scanner.hasNext()) {
+				cardInfo.add(scanner.next());
+			}
+			if (cardInfo.size() > 1) {
+				newCard = new Card(suitString2Char((String)cardInfo.get(0)), 
+						rankString2Char((String)cardInfo.get(1)));
+			}
+			return newCard;
+		} catch(NullPointerException exeption) {
+			throw new EOFException();
+		}
+	}
+	
+	/**
+	 * write data
+	 * @param output
+	 * @throws IOException
+	 */
+	public void write(DataOutput output) throws IOException {
+		try {
+			output.writeChar(suit);
+			output.writeChar(rank);
+		} catch (Exception ex) {
+			throw new IOException();
+		}
+	}
+	
+	public static Card read(DataInput input) throws IOException {
+		try {
+			char suit = input.readChar();
+			char rank = input.readChar();
+			return new Card(suit, rank);
+		} catch(NullPointerException exeption) {
+			throw new EOFException();
+		}
+	}
+	
+	
+	
 	
 	/**
 	 * Main method
@@ -52,15 +111,37 @@ public class Card
 		Card card3 = new Card(CLUBS, KING);
 		Card card4 = new Card(DIAMONDS, KING);
 		
-		try (PrintWriter printWriter = new PrintWriter(args[0])) {
+		if (args.length > 0) {
+			try (PrintWriter printWriter = new PrintWriter(args[0])) {
+				card1.write(printWriter);
+				card2.write(printWriter);
+				card3.write(printWriter);
+				card4.write(printWriter);
+			} catch (FileNotFoundException exeption) {
+				System.out.println("File not found");
+			}
+		} else {
+			PrintWriter printWriter = new PrintWriter(System.out);
 			card1.write(printWriter);
 			card2.write(printWriter);
 			card3.write(printWriter);
 			card4.write(printWriter);
-		} catch (FileNotFoundException exeption) {
-			//dosmthgn
+			printWriter.close();
 		}
 		
+		try(BufferedReader reader = new BufferedReader(new FileReader(args[0]))) {
+			Card card = read(reader);
+			System.out.println(card.toString());
+			Card card6 = read(reader);
+			System.out.println(card6.toString());
+			Card card7 = read(reader);
+			System.out.println(card7.toString());
+			Card card8 = read(reader);
+			System.out.println(card8.toString());
+			Card card9 = read(reader);
+		} catch (IOException exception) {
+			System.out.println("Sir, we might have a slight problem.");
+		}
 		
 	}
 	
