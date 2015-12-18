@@ -1,0 +1,4 @@
+Spades king
+Hearts king
+Clubs king
+Diamonds king

@@ -3,8 +3,10 @@ package ss.week6.test;
 import org.junit.Before;
 import org.junit.Test;
 import ss.week6.voteMachine.PartyList;
+//import ss.week6.voteMachine.VoteList;
 import ss.week6.voteMachine.VoteList;
 
+import java.io.IOException;
 import java.util.Map;
 
 import static org.junit.Assert.*;

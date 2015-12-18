@@ -1,18 +1,11 @@
 package ss.week6.cards;
 
-import java.io.BufferedReader;
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.EOFException;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Card
+public class Card implements Serializable
 {
 
 	// ---- constants -----------------------------------
@@ -81,14 +74,17 @@ public class Card
 	 * @throws IOException
 	 */
 	public void write(DataOutput output) throws IOException {
-		try {
-			output.writeChar(suit);
-			output.writeChar(rank);
-		} catch (Exception ex) {
-			throw new IOException();
-		}
+		output.writeChar(suit);
+		output.writeChar(rank);
+		
 	}
 	
+	/**
+	 * read a data file
+	 * @param input
+	 * @return
+	 * @throws IOException
+	 */
 	public static Card read(DataInput input) throws IOException {
 		try {
 			char suit = input.readChar();
@@ -99,13 +95,28 @@ public class Card
 		}
 	}
 	
+	/**
+	 * creates an object file
+	 * @param output
+	 * @throws IOException
+	 */
+	public void write(ObjectOutput output) throws IOException {
+		output.writeObject(new Card(suit, rank));
+	}
 	
-	
+	public static Card read(ObjectInput input) throws IOException {
+		try {
+			return (Card)input.readObject();
+		} catch(NullPointerException | ClassNotFoundException exeption) {
+			throw new EOFException();
+		}
+	}
 	
 	/**
 	 * Main method
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Card card1 = new Card(SPADES, KING);
 		Card card2 = new Card(HEARTS, KING);
 		Card card3 = new Card(CLUBS, KING);
@@ -138,9 +149,15 @@ public class Card
 			System.out.println(card7.toString());
 			Card card8 = read(reader);
 			System.out.println(card8.toString());
-			Card card9 = read(reader);
 		} catch (IOException exception) {
 			System.out.println("Sir, we might have a slight problem.");
+		}
+		
+		try(ObjectOutput stream = new ObjectOutputStream(new FileOutputStream("object.obj"))) {
+			Card objCard = new Card(SPADES, KING);
+			objCard.write(stream);
+		} catch (FileNotFoundException ex) {
+			
 		}
 		
 	}
