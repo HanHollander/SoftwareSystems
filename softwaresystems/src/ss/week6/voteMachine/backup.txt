@@ -1,0 +1,74 @@
+package ss.week6.voteMachine;
+
+import java.io.*;
+import java.util.*;
+
+public class PartyList {
+	
+	public static final String PATH = "src\\ss\\week6\\voteMachine\\list.obj";
+	
+	
+	//ADD\\
+	public void addParty(String party) {
+		try {
+			ObjectOutput output = new ObjectOutputStream(new FileOutputStream(PATH));
+			HashMap<String, Integer> votelist = this.getMap();
+			votelist.put(party, 0);
+			System.out.println("add: " + votelist);
+			output.writeObject(votelist);
+			output.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	//GETMAP\\
+	public HashMap<String, Integer> getMap() {
+		HashMap<String, Integer> result = null;
+		try {
+			ObjectInput input = new ObjectInputStream(new FileInputStream(PATH));
+			result = (HashMap<String, Integer>)input.readObject();
+			if (result == null ){
+				result = new HashMap<String, Integer>()
+			}
+			input.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("map: " + result);
+		return result;
+		
+	}
+	
+	//RETRIEVE\\
+	public ArrayList<String> getParties() {
+		ArrayList<String> result = new ArrayList<String>();
+		HashMap<String, Integer> votelist = this.getMap();
+		try {
+			Set<String> keySet = votelist.keySet();
+			for (String party : keySet) {
+				result.add(party);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("get:" + result);
+		return result;
+	}
+	
+	//HASPARTY\\
+	public boolean hasParty(String party) {
+		ArrayList<String> partyList = getParties();
+		boolean result = false;
+		try {	
+			result = partyList.contains(party);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+		
+	}
+	
+
+}
