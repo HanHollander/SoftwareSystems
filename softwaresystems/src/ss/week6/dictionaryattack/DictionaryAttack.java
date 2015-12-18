@@ -1,6 +1,7 @@
 package ss.week6.dictionaryattack;
 
-import java.util.Map;
+import java.util.*;
+import java.io.*;
 
 
 public class DictionaryAttack {
@@ -17,7 +18,17 @@ public class DictionaryAttack {
 	 * @param filename
 	 */
 	public void readPasswords(String filename) {
-		// To implement        
+		Scanner scanner = new Scanner(filename);
+		List<String> lines = new ArrayList<>();
+		while (scanner.hasNextLine()) {
+			lines.add(scanner.nextLine());
+		}
+		for (String line : lines) {
+			String[] words = line.split(": ");
+			String username = words[0];
+			String password = words[1];
+			passwordMap.put(username, password);
+		}
 	}
 
 	/**

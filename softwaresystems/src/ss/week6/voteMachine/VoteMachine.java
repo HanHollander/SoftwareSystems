@@ -13,7 +13,9 @@ public class VoteMachine {
 	public VoteMachine() {
 		partyList = new PartyList();
 		voteList = new VoteList();
-		voteView = new VoteTUIView(this);
+		voteView = new VoteGUIView(this);
+		partyList.addObserver(voteView);
+		voteList.addObserver(voteView);
 	}
 	
 	public static void main(String[] args) {
@@ -26,8 +28,12 @@ public class VoteMachine {
 	}
 	
 	public void addParty(String party) {
-		partyList.addParty(party);
-		voteList.addParty(party);
+		if (partyList.getParties().contains(party)){
+			voteView.showError("Party already exists");
+		} else {
+			partyList.addParty(party);
+			voteList.addParty(party);
+		}
 	}
 	
 	public void vote(String party) {

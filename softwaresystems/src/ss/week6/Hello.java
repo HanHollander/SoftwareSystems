@@ -9,23 +9,24 @@ public class Hello {
 	
 	public static void main(String[] args) {
 		String q = "And what be yer name lad?";
-		while (true) {
+		String name;
+		do {
 			System.out.println(q);
-			String answer = "Hello " + readString() + ". ";
-			System.out.println(answer);
-			q = answer + q;
-		}
+			name = readString();
+			if (name.length() != 0) {
+				String answer = "Hello " + name + ". ";
+				System.out.println(answer);
+			}
+		} while (name.length() != 0);
 	}
 	
 	public static String readString() {
 		Scanner scanner = new Scanner(System.in);
 		String result = "";
 		
-		while (result == "") {
 			if (scanner.hasNextLine()) {
 				result = scanner.nextLine();
 			}
-		}
 		
 		return result;
 	}

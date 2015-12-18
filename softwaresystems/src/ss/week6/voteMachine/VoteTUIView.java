@@ -56,11 +56,12 @@ public class VoteTUIView implements VoteView, Observer {
 	public void showError(String error) {
 		System.out.println(error);
 	}
-
+	
+	@Override
 	public void update(Observable o, Object arg) {
-		if (arg == "vote") {
+		if (arg.equals("vote")) {
 			System.out.println("Someone voted");
-		} else if (arg == "party") {
+		} else if (arg.equals("party")) {
 			System.out.println("party added");
 		} else {
 			System.out.println("Someting happened");
