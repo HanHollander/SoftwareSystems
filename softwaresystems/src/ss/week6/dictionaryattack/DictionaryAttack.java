@@ -2,6 +2,8 @@ package ss.week6.dictionaryattack;
 
 import java.util.*;
 import java.io.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 
 public class DictionaryAttack {
@@ -36,10 +38,19 @@ public class DictionaryAttack {
 	 * hash (or sometimes called digest) should be hex-encoded in a String.
 	 * @param password
 	 * @return
+	 * @throws NoSuchAlgorithmException 
+	 * @throws UnsupportedEncodingException 
 	 */
 	public String getPasswordHash(String password) {
-    		// To implement
-    		return null;
+			MessageDigest md = null;
+			try {
+				md = MessageDigest.getInstance("MD5");
+				md.update(password.getBytes("UTF-8"));
+			} catch (Exception e) {
+				// me no care
+			}
+    		
+			return md.digest().toString();
 	}
 	/**
 	 * Checks the password for the user the password list. If the user
@@ -71,7 +82,8 @@ public class DictionaryAttack {
 	public static void main(String[] args) {
 		DictionaryAttack da = new DictionaryAttack();
 		// To implement
-		da.doDictionaryAttack();
+		// da.doDictionaryAttack();
+		System.out.println(da.getPasswordHash("password"));
 	}
 
 }
