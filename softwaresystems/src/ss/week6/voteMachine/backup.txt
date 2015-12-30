@@ -72,3 +72,83 @@ public class PartyList {
 	
 
 }
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+public static final String PATH = "src\\ss\\week6\\voteMachine\\";
+	
+	
+	//ADD\\
+	public void addParty(String party) {
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter(new BufferedWriter(new FileWriter(PATH + "partylist.txt", true)));
+			writer.println(party);
+			writer.close();
+		} catch (IOException e) {
+			System.out.println("Error in Addparty");
+		}
+		
+	}
+	
+	//RETRIEVE\\
+	public ArrayList<String> getParties() {
+		BufferedReader reader = null;
+		ArrayList<String> result = null;
+		try {
+			reader = new BufferedReader(new FileReader(PATH + "partylist.txt"));
+			Scanner scanner = new Scanner(reader);
+			result = new ArrayList<String>();
+			while (scanner.hasNextLine()) {
+				result.add(scanner.nextLine());
+			}
+			reader.close();
+		} catch (IOException e) {
+			System.out.println("Error in getParties");
+		}
+		
+		
+		return result;
+		
+	}
+	
+	public boolean hasParty(String party) {
+		ArrayList<String> partyList = null;
+		try {
+			partyList = getParties();
+		} catch (Exception e) {
+			System.out.println("Error in hasParty");
+		}
+		return partyList.contains(party);
+	}
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+public static final String PATH = PartyList.PATH;
+
+	//RETRIEVE\\
+	public HashMap<String, Integer> getVotes() {
+		HashMap<String, Integer> result = new HashMap<String, Integer>();
+		try {
+			ObjectInput input = new ObjectInputStream(new FileInputStream(PATH));
+			result = (HashMap<String, Integer>) input.readObject();
+			input.close();
+		} catch (EOFException e) {
+			System.out.println("End of file getVotes");
+		} catch (Exception e) {
+			System.out.println("Error in getVotes");
+		}
+		return result;
+	}
+
+	public void addVote(String party) {
+		try {
+			ObjectOutput output = new ObjectOutputStream(new FileOutputStream(PATH));
+			HashMap<String, Integer> votelist = this.getVotes();
+			votelist.replace(party, votelist.get(party) + 1);
+			output.writeObject(votelist);
+			output.close();
+		} catch (Exception e) {
+			System.out.println("Error in addVote");
+		}
+	}
