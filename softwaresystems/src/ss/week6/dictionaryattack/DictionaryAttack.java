@@ -9,7 +9,14 @@ import java.security.NoSuchAlgorithmException;
 public class DictionaryAttack {
 	private Map<String, String> passwordMap;
 	private Map<String, String> hashDictionary;
+	
+	public static final String PATH = "src\\ss\\week6\\dictionaryattack\\";
 
+	public DictionaryAttack() {
+		passwordMap = new HashMap<>();
+		hashDictionary = new HashMap<>();
+	}
+	
 	/**
 	 * Reads a password file. Each line of the password file has the form:
 	 * username: encodedpassword
@@ -20,18 +27,25 @@ public class DictionaryAttack {
 	 * @param filename
 	 */
 	public void readPasswords(String filename) {
-		Scanner scanner = new Scanner(filename);
-		List<String> lines = new ArrayList<>();
-		while (scanner.hasNextLine()) {
-			lines.add(scanner.nextLine());
-		}
-		for (String line : lines) {
-			String[] words = line.split(": ");
-			String username = words[0];
-			String password = words[1];
-			passwordMap.put(username, password);
+		File file = new File(PATH + filename);
+		try {
+			Scanner scanner = new Scanner(file);
+			List<String> lines = new ArrayList<>();
+			while (scanner.hasNextLine()) {
+				lines.add(scanner.nextLine());
+			}
+			for (String line : lines) {
+				String[] words = line.split(": ");
+				String username = words[0];
+				String password = words[1];
+				passwordMap.put(username, password);
+			}
+			scanner.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("file not finded");
 		}
 	}
+		
 
 	/**
 	 * Given a password, return the MD5 hash of a password. The resulting
@@ -49,8 +63,12 @@ public class DictionaryAttack {
 			} catch (Exception e) {
 				// me no care
 			}
-    		
-			return md.digest().toString();
+			byte[] digest = md.digest();
+			StringBuffer sb = new StringBuffer();
+			for (byte b : digest) {
+				sb.append(String.format("%02x", b & 0xff));
+			}
+			return sb.toString();
 	}
 	/**
 	 * Checks the password for the user the password list. If the user
@@ -60,8 +78,15 @@ public class DictionaryAttack {
 	 * @return whether the password for that user was correct.
 	 */
 	public boolean checkPassword(String user, String password) {
-        // To implement
-		return false;
+        String hashPassword = getPasswordHash(password);
+        String userHashPassword = null;
+        Set<String> keySet = passwordMap.keySet();
+        for (String key : keySet) {
+        	if (key.equals(user)) {
+        		userHashPassword = passwordMap.get(key);
+        	}
+        }
+		return userHashPassword.equals(hashPassword);
 	}
 
 	/**
@@ -70,20 +95,55 @@ public class DictionaryAttack {
      * the original password.
 	 * @param filename filename of the dictionary.
 	 */
-    	public void addToHashDictionary(String filename) {
-        // To implement        
+    public void addToHashDictionary(String filename) {
+    	File file = new File(PATH + filename);
+		Scanner scanner;
+		try {
+			scanner = new Scanner(file);
+			List<String> lines = new ArrayList<>();
+			while (scanner.hasNextLine()) {
+				lines.add(scanner.nextLine());
+			}      
+			for (String line : lines) {
+				hashDictionary.put(getPasswordHash(line), line);
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("Filie not gefind");
+		}
+		
     }
+    
 	/**
 	 * Do the dictionary attack.
 	 */
 	public void doDictionaryAttack() {
-		// To implement
+		Set<String> keySetUser = passwordMap.keySet();
+		Set<String> keySetDict = hashDictionary.keySet();
+		for (String user : keySetUser) {
+			for (String hashPass : keySetDict) {
+				if (passwordMap.get(user).equals(hashPass)) {
+					System.out.println("User = " + user + "; Password = " + hashDictionary.get(hashPass));
+				}
+			}
+		}
 	}
+	
+	
+	
+	
+	
 	public static void main(String[] args) {
 		DictionaryAttack da = new DictionaryAttack();
 		// To implement
 		// da.doDictionaryAttack();
 		System.out.println(da.getPasswordHash("password"));
+		da.readPasswords("passwords.txt");
+		System.out.println(da.passwordMap);
+		da.addToHashDictionary("dictionary.txt");
+		System.out.println(da.hashDictionary);
+		da.doDictionaryAttack();
+		System.out.println(da.checkPassword("dumbass", "696969"));
+		System.out.println(da.checkPassword("katrine", "spongebob"));
 	}
 
 }
