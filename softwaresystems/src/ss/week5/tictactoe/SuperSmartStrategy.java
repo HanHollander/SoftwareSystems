@@ -1,7 +1,6 @@
 package ss.week5.tictactoe;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class SuperSmartStrategy implements Strategy {
 
@@ -12,6 +11,7 @@ public class SuperSmartStrategy implements Strategy {
 
 	
 	public int determineMove(Board b, Mark m) {
+
 		int result = -1;
 		boolean determined = false;
 		Set<Integer> emptyFields = new HashSet<Integer>();
@@ -20,6 +20,16 @@ public class SuperSmartStrategy implements Strategy {
 				emptyFields.add(i);
 			}
 		}
+		
+		if (!determined){						// If one field left
+			if (emptyFields.size() == 1) {
+				for (int field : emptyFields) {
+					result = field;
+					determined = true;
+				}
+			}
+		}
+		
 		if (!determined){						// If instant win available
 			for (int field : emptyFields) {
 				Board copy = b.deepCopy();
@@ -47,10 +57,88 @@ public class SuperSmartStrategy implements Strategy {
 			}
 		} 
 		if (!determined){
-			for (int field : emptyFields) {
-				
+			int thisMoveChance;
+			int thisMoveEnemyChance;
+			ArrayList<Integer> bestMoveYet = new ArrayList<Integer>();
+			if (iStarted(b, m)) {
+				bestMoveYet.add(-1);
+				bestMoveYet.add(-1);
+				for (int field : emptyFields) {
+					thisMoveChance = getWinChanceMove(field, b.deepCopy(), m, m);
+					thisMoveEnemyChance = getWinChanceMove(field, b.deepCopy(), m, m.other());
+					System.out.println(field + " " + thisMoveChance + "% " + thisMoveEnemyChance + "%");
+					if (thisMoveChance > bestMoveYet.get(1)) {
+						bestMoveYet.set(0, field);
+						bestMoveYet.set(1, thisMoveChance);
+					}
+				}
+			} else {
+				bestMoveYet.add(999);
+				bestMoveYet.add(999);
+				for (int field : emptyFields) {
+					thisMoveChance = getWinChanceMove(field, b.deepCopy(), m, m);
+					thisMoveEnemyChance = getWinChanceMove(field, b.deepCopy(), m, m.other());
+					System.out.println(field + " " + thisMoveChance + "% " + thisMoveEnemyChance + "%");
+					if (thisMoveEnemyChance < bestMoveYet.get(1)) {
+						bestMoveYet.set(0, field);
+						bestMoveYet.set(1, thisMoveEnemyChance);
+					}
+				}
 			}
+			result = bestMoveYet.get(0);
 		}
 		return result;
 	}
+	
+	private int getWinChanceMove(int move, Board board, Mark mark, Mark myMark) {
+		board.setField(move, mark);
+		int result;
+		
+		Set<Integer> emptyFields = new HashSet<Integer>();
+		
+		for (int i = 0; i < board.DIM * board.DIM; i++) {
+			if (board.isEmptyField(i)) {
+				emptyFields.add(i);
+			}
+		}
+		
+		
+		if (board.gameOver()) {
+			if (board.isWinner(myMark)) {
+				result = 100;
+			} else {
+				result = 0;
+			}
+		} else {
+			int winChanceCurrentMove;
+			
+			int total = 0;
+			
+			// Mark otherMark = mark.other();
+			
+			for (int field : emptyFields) {
+				Board boardCopy = board.deepCopy();
+				winChanceCurrentMove = getWinChanceMove(field, boardCopy, mark.other(), myMark);
+				total = total + winChanceCurrentMove;
+			}
+			result = total / emptyFields.size();
+			
+		}
+		
+		return result;
+	}
+	
+	private boolean iStarted(Board board, Mark mark) {
+		int myTurns = 0;
+		int enemyTurns = 0;
+		for (int i = 0; i < board.DIM * board.DIM; i++) {
+			if (board.getField(i).equals(mark)) {
+				myTurns++;
+			} else if (board.getField(i).equals(mark.other())) {
+				enemyTurns++;
+			}
+		}
+		return myTurns == enemyTurns;
+	}
+	
 }

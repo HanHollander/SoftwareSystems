@@ -9,6 +9,7 @@ public class ComputerPlayer extends Player {
 	public ComputerPlayer(Mark mark, Strategy strategy) {
 		super(strategy.getName() + "-" + mark, mark);
 		this.strategy = strategy;
+		this.mark = mark;
 	}
 	
 	public ComputerPlayer(Mark mark) {
