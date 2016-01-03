@@ -63,10 +63,12 @@ public class SuperSmartStrategy implements Strategy {
 			if (iStarted(b, m)) {
 				bestMoveYet.add(-1);
 				bestMoveYet.add(-1);
+				System.out.println("Win chance:");
+				System.out.println("  Mine: " + "Enemy:");
 				for (int field : emptyFields) {
 					thisMoveChance = getWinChanceMove(field, b.deepCopy(), m, m);
 					thisMoveEnemyChance = getWinChanceMove(field, b.deepCopy(), m, m.other());
-					System.out.println(field + " " + thisMoveChance + "% " + thisMoveEnemyChance + "%");
+					System.out.println(field + " " + thisMoveChance + "%   " + thisMoveEnemyChance + "%");
 					if (thisMoveChance > bestMoveYet.get(1)) {
 						bestMoveYet.set(0, field);
 						bestMoveYet.set(1, thisMoveChance);
@@ -75,10 +77,12 @@ public class SuperSmartStrategy implements Strategy {
 			} else {
 				bestMoveYet.add(999);
 				bestMoveYet.add(999);
+				System.out.println("Win chance:");
+				System.out.println("  Mine: " + "Enemy:");
 				for (int field : emptyFields) {
 					thisMoveChance = getWinChanceMove(field, b.deepCopy(), m, m);
 					thisMoveEnemyChance = getWinChanceMove(field, b.deepCopy(), m, m.other());
-					System.out.println(field + " " + thisMoveChance + "% " + thisMoveEnemyChance + "%");
+					System.out.println(field + " " + thisMoveChance + "%   " + thisMoveEnemyChance + "%");
 					if (thisMoveEnemyChance < bestMoveYet.get(1)) {
 						bestMoveYet.set(0, field);
 						bestMoveYet.set(1, thisMoveEnemyChance);
