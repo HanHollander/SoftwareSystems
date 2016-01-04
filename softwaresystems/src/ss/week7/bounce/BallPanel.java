@@ -15,6 +15,23 @@ import javax.swing.JPanel;
  */
 public class BallPanel extends JPanel implements ActionListener {
 	private List<Ball> balls; // @invariant balls != null
+	
+	public class AnimateThread extends Thread {
+		
+		private BallPanel bp;
+		
+		public AnimateThread(BallPanel bp) {
+			this.bp = bp;
+		}
+		
+		public void run() {
+			bp.animate();
+		}
+	}
+	
+	
+	
+	
 
 	public BallPanel() {
 		balls = new java.util.ArrayList<Ball>();
@@ -44,6 +61,8 @@ public class BallPanel extends JPanel implements ActionListener {
 	/** Add a new ball to the ball list and start the timer if not yet running. */
 	public synchronized void addNewBall() {
 		balls.add(new Ball(this));
+		new AnimateThread(this).start();
+		
 	}
 
 	/**
