@@ -26,9 +26,8 @@ public class DictionaryAttack {
 	 * the username, and the password hash should be the content.
 	 * @param filename
 	 */
-	public void readPasswords(String filename) {
+	public void readPasswords(String filename) throws IOException {
 		File file = new File(PATH + filename);
-		try {
 			Scanner scanner = new Scanner(file);
 			List<String> lines = new ArrayList<>();
 			while (scanner.hasNextLine()) {
@@ -41,9 +40,8 @@ public class DictionaryAttack {
 				passwordMap.put(username, password);
 			}
 			scanner.close();
-		} catch (FileNotFoundException e) {
 			System.out.println("file not finded");
-		}
+		
 	}
 		
 
@@ -61,7 +59,7 @@ public class DictionaryAttack {
 				md = MessageDigest.getInstance("MD5");
 				md.update(password.getBytes("UTF-8"));
 			} catch (Exception e) {
-				// me no care
+				 System.exit(1);
 			}
 			byte[] digest = md.digest();
 			StringBuffer sb = new StringBuffer();
@@ -95,10 +93,10 @@ public class DictionaryAttack {
      * the original password.
 	 * @param filename filename of the dictionary.
 	 */
-    public void addToHashDictionary(String filename) {
+    public void addToHashDictionary(String filename) throws IOException {
     	File file = new File(PATH + filename);
 		Scanner scanner;
-		try {
+		
 			scanner = new Scanner(file);
 			List<String> lines = new ArrayList<>();
 			while (scanner.hasNextLine()) {
@@ -107,9 +105,8 @@ public class DictionaryAttack {
 			for (String line : lines) {
 				hashDictionary.put(getPasswordHash(line), line);
 			}
-		} catch (FileNotFoundException e) {
 			System.out.println("Filie not gefind");
-		}
+		
 		
     }
     
