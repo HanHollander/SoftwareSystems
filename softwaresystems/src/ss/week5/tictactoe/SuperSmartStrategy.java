@@ -9,7 +9,7 @@ public class SuperSmartStrategy implements Strategy {
 		return "Super smart strategy";
 	}
 
-	
+	int count;
 	public int determineMove(Board b, Mark m) {
 
 		int result = -1;
@@ -57,6 +57,7 @@ public class SuperSmartStrategy implements Strategy {
 			}
 		} 
 		if (!determined){
+			int realCount = 0;
 			int thisMoveChance;
 			int thisMoveEnemyChance;
 			ArrayList<Integer> bestMoveYet = new ArrayList<Integer>();
@@ -65,6 +66,7 @@ public class SuperSmartStrategy implements Strategy {
 				bestMoveYet.add(-1);
 				System.out.println("Win chance:");
 				System.out.println("  Mine: " + "Enemy:");
+				count = 0;
 				for (int field : emptyFields) {
 					thisMoveChance = getWinChanceMove(field, b.deepCopy(), m, m);
 					thisMoveEnemyChance = getWinChanceMove(field, b.deepCopy(), m, m.other());
@@ -72,6 +74,7 @@ public class SuperSmartStrategy implements Strategy {
 					if (thisMoveChance > bestMoveYet.get(1)) {
 						bestMoveYet.set(0, field);
 						bestMoveYet.set(1, thisMoveChance);
+						realCount = count;
 					}
 				}
 			} else {
@@ -79,6 +82,7 @@ public class SuperSmartStrategy implements Strategy {
 				bestMoveYet.add(999);
 				System.out.println("Win chance:");
 				System.out.println("  Mine: " + "Enemy:");
+				count = 0;
 				for (int field : emptyFields) {
 					thisMoveChance = getWinChanceMove(field, b.deepCopy(), m, m);
 					thisMoveEnemyChance = getWinChanceMove(field, b.deepCopy(), m, m.other());
@@ -86,9 +90,11 @@ public class SuperSmartStrategy implements Strategy {
 					if (thisMoveEnemyChance < bestMoveYet.get(1)) {
 						bestMoveYet.set(0, field);
 						bestMoveYet.set(1, thisMoveEnemyChance);
+						realCount = count;
 					}
 				}
 			}
+			System.out.println(realCount / 2 + " possible outcomes");
 			result = bestMoveYet.get(0);
 		}
 		return result;
@@ -97,6 +103,8 @@ public class SuperSmartStrategy implements Strategy {
 	private int getWinChanceMove(int move, Board board, Mark mark, Mark myMark) {
 		board.setField(move, mark);
 		int result;
+		
+		count = count + 1;
 		
 		Set<Integer> emptyFields = new HashSet<Integer>();
 		
