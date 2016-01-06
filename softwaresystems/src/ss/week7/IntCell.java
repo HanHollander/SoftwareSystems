@@ -29,12 +29,31 @@ public class IntCell {
 class Adder extends Thread {
     private IntCell cell;
     private int amount;
+    boolean alreadyAdded = false;
+    String firstName = "Thread-0";
 
     public Adder(IntCell cellArg, int amountArg) {
         this.cell = cellArg;
         this.amount = amountArg;
     }
-    public void run() {
-        cell.add(amount);
+    public synchronized void run() {
+//    	while (!alreadyAdded && !(getName().equals(firstName))) {
+//    		try {
+//				wait();
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				//e.printStackTrace();
+//			}
+//    	}
+//    	System.out.println(getName());
+//        cell.add(amount);
+//        alreadyAdded = true;
+//        notifyAll();
+    	synchronized(IntCell.class) {
+	    	System.out.println(getName() + " did his buisness");
+	        cell.add(amount);
+	        alreadyAdded = true;
+	        System.out.println(getName() + " notified");
+    	}
     }
 }

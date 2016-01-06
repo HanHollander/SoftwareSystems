@@ -5,7 +5,9 @@ public class AccountSync {
 	public static void main(String[] args) {
 		Account account = new Account();
 		Thread thread1 = new MyThread(-100, 11, account);
-		Thread thread2 = new MyThread(9.0, 10, account);
+		Thread thread2 = new MyThread(100, 12, account);
+//		Thread thread1 = new Thread(new MyThread(-100, 11, account));
+//		Thread thread2 = new Thread(new MyThread(100, 12, account));
 		
 		thread1.start();
 		thread2.start();
