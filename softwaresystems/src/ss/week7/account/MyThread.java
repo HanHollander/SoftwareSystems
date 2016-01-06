@@ -10,12 +10,12 @@ public class MyThread extends Thread {
 		theAmount = amount;
 		theFrequency = frequency;
 		theAccount = account;
-		executeTransaction();
 	}
 	
-	public void executeTransaction() {
+	public void run() {
 		for (int i = 0; i < theFrequency; i++) {
 			theAccount.transaction(theAmount);
+			System.out.println(getName() + ": " + theAmount + ", " + theAccount.getBalance());
 		}
 	}
 
