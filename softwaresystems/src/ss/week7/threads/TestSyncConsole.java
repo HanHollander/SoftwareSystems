@@ -1,17 +1,30 @@
 package ss.week7.threads;
 
+import java.util.concurrent.locks.*;
+
 public class TestSyncConsole extends Thread {
+	
+	Lock l = new ReentrantLock(true);
 	
 	public TestSyncConsole(String name) {
 		super(name);
 	}
 	
-	private synchronized void sum() {
+	private void sum() {
+		System.out.println(l.toString());
+		
+		l.lock();
+	
+		System.out.println(l.toString());
 		int i;
 		int j;
 		i = SyncConsole.readInt(getName() + ": first term? ");
 		j = SyncConsole.readInt(getName() + ": second term? ");
-		Console.println(getName() + ": " + i + " + " + j + " = " + (i + j));
+		SyncConsole.println(getName() + ": " + i + " + " + j + " = " + (i + j));
+	
+		l.unlock();
+		
+		
 	}
 	
 	public void run() {
