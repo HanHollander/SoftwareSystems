@@ -14,16 +14,16 @@ public class TestSyncConsole extends Thread {
 		System.out.println(l.toString());
 		
 		l.lock();
-	
-		System.out.println(l.toString());
-		int i;
-		int j;
-		i = SyncConsole.readInt(getName() + ": first term? ");
-		j = SyncConsole.readInt(getName() + ": second term? ");
-		SyncConsole.println(getName() + ": " + i + " + " + j + " = " + (i + j));
-	
-		l.unlock();
-		
+		try {
+			System.out.println(l.toString());
+			int i;
+			int j;
+			i = SyncConsole.readInt(getName() + ": first term? ");
+			j = SyncConsole.readInt(getName() + ": second term? ");
+			SyncConsole.println(getName() + ": " + i + " + " + j + " = " + (i + j));
+		} finally {
+			l.unlock();
+		}
 		
 	}
 	

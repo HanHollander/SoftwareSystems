@@ -1,6 +1,6 @@
 package ss.week7.account;
 
-public class MyThread extends Thread {
+public class MyThread extends Thread { // implements Runnable {
 	
 	private double theAmount;
 	private int theFrequency;
@@ -15,7 +15,7 @@ public class MyThread extends Thread {
 	public void run() {
 		for (int i = 0; i < theFrequency; i++) {
 			theAccount.transaction(theAmount);
-			System.out.println(getName() + ": " + theAmount + ", " + theAccount.getBalance());
+			System.out.println(theAmount + ", " + theAccount.getBalance());
 		}
 	}
 
