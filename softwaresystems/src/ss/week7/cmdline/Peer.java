@@ -3,6 +3,7 @@ package ss.week7.cmdline;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
@@ -29,8 +30,9 @@ public class Peer implements Runnable {
      * @param   nameArg name of the Peer-proces
      * @param   sockArg Socket of the Peer-proces
      */
-    public Peer(String nameArg, Socket sockArg) throws IOException
-    {
+    public Peer(String nameArg, Socket sockArg) throws IOException {
+    	name = nameArg;
+    	sock = sockArg;
     }
 
     /**
@@ -38,6 +40,17 @@ public class Peer implements Runnable {
      * writes the characters to the default output.
      */
     public void run() {
+    	InputStream input;
+		try {
+			input = sock.getInputStream();
+			in = new BufferedReader(new InputStreamReader(input));
+			while (true) {
+				System.out.println(in.readLine());
+			}
+		} catch (IOException e) {
+			//
+		}
+    	
     }
 
 

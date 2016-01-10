@@ -1,15 +1,28 @@
 package ss.week7;
 
 
-public class QuickSort {
+public class QuickSort implements Runnable {
+	
+	private int[] a;
+
+ 	public QuickSort(int[] a) {
+ 		this.a = a;
+ 	}
+	
+	public void run() {
+		qsort(a, 0, a.length - 1);
+	}
+	
     public static void qsort(int[] a) {
-        qsort(a, 0, a.length - 1);
+    	(new Thread(new QuickSort(a))).start();
     }
-    public static void qsort(int[] a, int first, int last) {
+    public static void qsort(int[] a, int first, int last){
         if (first < last) {
             int position = partition(a, first, last);
             qsort(a, first, position - 1);
             qsort(a, position + 1, last);
+            //(new Thread(new QuickSort(a, first, position - 1))).start();
+            //(new Thread(new QuickSort(a, position + 1, last))).start();
         }
     }
     public static int partition(int[] a, int first, int last) {
