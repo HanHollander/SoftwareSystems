@@ -51,8 +51,9 @@ public class Client {
         } catch (IOException e) {
             System.out.println("ERROR: could not create a socket on " + addr
                     + " and port " + port);
+            System.exit(0);
         }
-
+        
         // create Peer object and start the two-way communication
         try {
             Peer client = new Peer(name, sock);
@@ -61,7 +62,7 @@ public class Client {
             client.handleTerminalInput();
             client.shutDown();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Connection lost :/");
         }
     }
 

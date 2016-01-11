@@ -41,11 +41,16 @@ public class Peer implements Runnable {
      */
     public void run() {
     	InputStream input;
+    	String text = "";
 		try {
 			input = sock.getInputStream();
 			in = new BufferedReader(new InputStreamReader(input));
-			while (true) {
-				System.out.println(in.readLine());
+			while (text != null) {
+				
+				text = in.readLine();
+				if (!(text == null) && !text.equals("\n")) {
+					System.out.println(text);
+				}
 			}
 		} catch (IOException e) {
 			//
@@ -60,12 +65,33 @@ public class Peer implements Runnable {
      * On Peer.EXIT the method ends
      */
     public void handleTerminalInput() {
+    	String tekst = "";
+    	try {
+			out = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+			while (!tekst.equals(EXIT)) {
+				tekst = readString("");
+				if (!tekst.equals(EXIT)) {
+					out.write(name + ": " + tekst);
+					out.newLine();
+					out.flush();
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Connection lost :/");
+		}
     }
 
     /**
      * Closes the connection, the sockets will be terminated
      */
     public void shutDown() {
+    	try {
+			sock.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     /**  returns name of the peer object*/
